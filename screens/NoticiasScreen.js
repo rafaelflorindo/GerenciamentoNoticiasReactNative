@@ -1,56 +1,54 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Importa o hook de navegação
-
-const noticias = [
-    {
-      id: '1',
-      titulo: 'Notícia 1',
-      descricao: 'Esta é a descrição da notícia 1.',
-      imagem: 'https://cdn.pixabay.com/photo/2015/01/19/13/51/car-604019_1280.jpg',
-      detalhes: 'Aqui estão mais detalhes sobre a notícia 1. Ela é muito interessante e informativa!',
-    },
-    {
-      id: '2',
-      titulo: 'Notícia 2',
-      descricao: 'Esta é a descrição da notícia 2.',
-      imagem: 'https://cdn.pixabay.com/photo/2016/04/01/12/16/car-1300629_1280.png',
-      detalhes: 'Aqui estão mais detalhes sobre a notícia 2. Ela também é bastante relevante.',
-    },
-    {
-      id: '3',
-      titulo: 'Notícia 3',
-      descricao: 'Esta é a descrição da notícia 3.',
-      imagem: 'https://cdn.pixabay.com/photo/2014/09/07/22/34/car-race-438467_1280.jpg',
-      detalhes: 'Mais informações sobre a notícia 3 podem ser encontradas aqui.',
-    },
-    {
-      id: '4',
-      titulo: 'Notícia 4',
-      descricao: 'Esta é a descrição da notícia 4.',
-      imagem: 'https://cdn.pixabay.com/photo/2018/07/01/20/01/dashboard-3510327_1280.jpg',
-      detalhes: 'Aqui estão mais detalhes sobre a notícia 4. Uma leitura obrigatória!',
-    },
-  ];
+import React, { useEffect, useState } from 'react';
+import { Button, View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import axios from 'axios'; // Importando Axios
 
 const NoticiasScreen = () => {
-  const navigation = useNavigation(); // Hook para navegação
+  const navigation = useNavigation();
+  const [noticias, setNoticias] = useState([]);
+  const [loading, setLoading] = useState(true); // Estado de carregamento
+
+  // Função para buscar as notícias
+  const fetchNoticias = async () => {
+    try {
+      const response = await axios.get('http://192.168.200.119:8080/noticias'); // Requisição para o backend
+      setNoticias(response.data); // Atualiza o estado com as notícias recebidas
+    } catch (error) {
+      console.error('Erro ao buscar notícias:', error);
+    } finally {
+      setLoading(false); // Finaliza o estado de carregamento
+    }
+  };
+
+  // Efeito para buscar as notícias ao montar o componente
+  useEffect(() => {
+    fetchNoticias();
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Notícias</Text>
+      
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CadastroNoticia')}>
+        <Text style={styles.buttonText}>+ Adicionar novas notícias</Text>
+      </TouchableOpacity>
 
-      {noticias.map(noticia => (
-        <TouchableOpacity
-          key={noticia.id}
-          style={styles.newsContainer}
-          onPress={() => navigation.navigate('DetalhesNoticia', { noticia })} // Navega para o detalhe
-        >
-          <Image source={{ uri: noticia.imagem }} style={styles.newsImage} />
-          <Text style={styles.newsTitle}>{noticia.titulo}</Text>
-          <Text style={styles.newsText}>{noticia.descricao}</Text>
-        </TouchableOpacity>
-      ))}
+      {loading ? ( // Exibe indicador de carregamento enquanto busca as notícias
+        <ActivityIndicator size="large" color="#007AFF" />
+      ) : (
+        noticias.map(noticia => (
+          <TouchableOpacity
+            key={noticia.id}
+            style={styles.newsContainer}
+            
+            onPress={() => navigation.navigate('DetalhesNoticia', { noticia })}
+          >
+            <Image source={{ uri: noticia.imagem }} style={styles.newsImage} />
+            <Text style={styles.newsTitle}>{noticia.titulo}</Text>
+            <Text style={styles.newsText}>{noticia.descricao}</Text>
+          </TouchableOpacity>
+        ))
+      )}
     </ScrollView>
   );
 };
@@ -59,20 +57,22 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 16,
-    backgroundColor: '#A4D7E1', // Azul Claro
+    backgroundColor: '#F7F9FC', // Fundo clean claro
   },
   title: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#003366', // Azul Marinho
-    marginBottom: 16,
+    marginBottom: 24,
+    textAlign: 'center',
   },
   newsContainer: {
     marginBottom: 20,
-    padding: 10,
+    padding: 16,
     backgroundColor: '#fff',
-    borderRadius: 8,
-    shadowColor: '#000',
+    borderRadius: 10,
+    elevation: 3, // Sombra no Android
+    shadowColor: '#000', // Sombra no iOS
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 1,
@@ -80,17 +80,38 @@ const styles = StyleSheet.create({
   newsImage: {
     width: '100%',
     height: 150,
-    borderRadius: 8,
-    marginBottom: 8,
+    borderRadius: 10,
+    marginBottom: 12,
   },
   newsTitle: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 'bold',
+    color: '#003366', // Azul Marinho
   },
   newsText: {
     fontSize: 16,
-    marginTop: 8,
+    marginTop: 4,
     color: '#555',
+  },
+  buttonContainer: {
+    marginTop: 10,
+  },
+  button: {
+    backgroundColor: '#007AFF', // Azul
+    borderRadius: 8,
+    paddingVertical: 15,
+    alignItems: 'center',
+    marginBottom: 15,
+    elevation: 2, // Sombra no Android
+    shadowColor: '#000', // Sombra no iOS
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

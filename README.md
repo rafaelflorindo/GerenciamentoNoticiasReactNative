@@ -25,6 +25,10 @@ O sistema de Gerencimento de Noticias é um sistema de atividade acadêmica real
 - npm install react-native-safe-area-context@4.10.5
 - npm install react-native-screens@3.31.1
 ```
+## Conexão com API em NodeJs
+```
+npm install axios
+```
 
 ## Instalar o projeto
 - npm install
