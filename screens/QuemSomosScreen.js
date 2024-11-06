@@ -1,38 +1,37 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
-
-const QuemSomosScreen = () => {
+import rafaelImage from '../assets/images/rafael.jpeg';
+const SobreMimScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.profileSection}>
+      <Image
+            source={rafaelImage}
+            style={styles.profileImage}
+          />
+
+        <Text style={styles.name}>Rafael Alves Florindo</Text>
+        <Text style={styles.role}>Professor de Tecnologia</Text>
+      </View>
+
       <View style={styles.section}>
-        <Text style={styles.title}>Quem Somos</Text>
-        <View style={styles.imagesContainer}>
-          <Image
-            source={{ uri: 'https://cdn.pixabay.com/photo/2017/05/31/11/17/office-2360063_1280.jpg' }} 
-            style={styles.image}
-          />
-          <Image
-            source={{ uri: 'https://cdn.pixabay.com/photo/2017/01/23/20/36/signature-2003808_1280.jpg' }} 
-            style={styles.image}
-          />
-        </View>
+        <Text style={styles.title}>Sobre Rafael</Text>
+        <Text style={styles.description}>
+          Com experiência na docência de tecnologia em cursos técnicos e de graduação, 
+          Rafael Alves Florindo se dedica a formar futuros profissionais com uma abordagem prática e inovadora.
+        </Text>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.subTitle}>Missão</Text>
         <Text style={styles.text}>
-          Inovar no ensino com metodologias tecnológicas que transformam o aprendizado.
+        Inspirar e preparar os alunos para o mercado de tecnologia, incentivando uma aprendizagem contínua e relevante.
         </Text>
 
         <Text style={styles.subTitle}>Visão</Text>
         <Text style={styles.text}>
-          Ser referência em educação tecnológica, conectando o futuro ao presente.
+        Conectar o futuro da tecnologia com a educação de hoje, formando profissionais capazes de transformar o mercado.
         </Text>
-
-        <Text style={styles.subTitle}>Valores</Text>
-        <Text style={styles.text}>- Inovação</Text>
-        <Text style={styles.text}>- Transparência</Text>
-        <Text style={styles.text}>- Colaboração</Text>
       </View>
     </ScrollView>
   );
@@ -42,42 +41,54 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,
-    backgroundColor: '#F7F9FC', // Fundo clean claro
+    backgroundColor: '#F0F2F5',
+  },
+  profileSection: {
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  profileImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginBottom: 16,
+  },
+  name: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  role: {
+    fontSize: 16,
+    color: '#666',
+    marginTop: 4,
   },
   section: {
     marginBottom: 32,
   },
   title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#003366', // Azul escuro
-    textAlign: 'center',
-    marginBottom: 24,
-  },
-  subTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333', // Texto escuro para subtítulos
-    marginTop: 20,
+    color: '#2C3E50',
+    marginBottom: 8,
+  },
+  subTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#34495E',
+    marginTop: 16,
     marginBottom: 8,
   },
   text: {
     fontSize: 16,
-    color: '#555', // Texto cinza
+    color: '#555',
     lineHeight: 24,
   },
-  imagesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 16,
-  },
-  image: {
-    width: 160,
-    height: 160,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: '#007AFF', // Borda azul para destaque
+  description: {
+    fontSize: 16,
+    color: '#555',
+    lineHeight: 24,
   },
 });
 
-export default QuemSomosScreen;
+export default SobreMimScreen;

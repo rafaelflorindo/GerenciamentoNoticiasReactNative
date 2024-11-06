@@ -10,6 +10,7 @@ import QuemSomosScreen from './screens/QuemSomosScreen';
 import ContatoScreen from './screens/ContatoScreen';
 import CadastroNoticiaScreen from './screens/CadastroNoticiaScreen';
 import DetalhesNoticiaScreen from './screens/DetalhesNoticiaScreen'; // Importando a tela de detalhes
+import TabelaNoticias from './screens/TabelaNoticias';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator(); // Criando um Stack Navigator
@@ -20,6 +21,15 @@ const NoticiasStack = () => {
     <Stack.Navigator>
       <Stack.Screen name="Noticias" component={NoticiasScreen} />
       <Stack.Screen name="DetalhesNoticia" component={DetalhesNoticiaScreen} />
+    </Stack.Navigator>
+  );
+};
+
+const GerenciamentoStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Listar Noticias" component={TabelaNoticias} />
+      <Stack.Screen name="Cadastro Noticia" component={CadastroNoticiaScreen} />
     </Stack.Navigator>
   );
 };
@@ -73,11 +83,11 @@ export default function App() {
             }}
           />
           <Tab.Screen
-            name="CadastroNoticia"
-            component={CadastroNoticiaScreen}
+            name="Gerenciar Noticia"
+            component={GerenciamentoStack}
             options={{
               tabBarIcon: ({ color }) => (
-                <Ionicons name="add-circle-outline" size={28} color={color} />
+                <Ionicons name="document-text-outline" size={28} color={color} />
               ),
             }}
           />

@@ -27,12 +27,8 @@ const NoticiasScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Notícias</Text>
+      <Text style={styles.title}>Tecnologia e Programação</Text>
       
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CadastroNoticia')}>
-        <Text style={styles.buttonText}>+ Adicionar novas notícias</Text>
-      </TouchableOpacity>
-
       {loading ? ( // Exibe indicador de carregamento enquanto busca as notícias
         <ActivityIndicator size="large" color="#007AFF" />
       ) : (
