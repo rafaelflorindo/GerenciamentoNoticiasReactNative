@@ -28,8 +28,8 @@ const NoticiasStack = () => {
 const GerenciamentoStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Listar Noticias" component={TabelaNoticias} />
-      <Stack.Screen name="Cadastro Noticia" component={CadastroNoticiaScreen} />
+      <Stack.Screen name="ListarNoticias" component={TabelaNoticias} />
+      <Stack.Screen name="CadastroNoticia" component={CadastroNoticiaScreen} />
     </Stack.Navigator>
   );
 };
